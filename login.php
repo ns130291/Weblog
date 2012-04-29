@@ -1,8 +1,8 @@
 <?php
+
 session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $link = mysql_connect('localhost:3306', 'root');
-    mysql_set_charset('utf8');
     if (!$link) {
         echo '-1';
     }
@@ -20,6 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     //echo $row[1].";".$row[2];
                     echo "1";
                     $_SESSION['userstate'] = $row[1];
+                    $_SESSION['username'] = $row[2];
+                    $_SESSION['useremail'] = $_POST['username'];
                 } else {
                     echo '-1';
                     //echo $row[0];

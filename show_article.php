@@ -14,7 +14,7 @@ if ($_SESSION) {
     if (!isset($_SESSION['userstate'])) {
         $_SESSION['userstate'] = -1;
     }
-}else{
+} else {
     $_SESSION['userstate'] = -1;
 }
 ?>
@@ -69,12 +69,16 @@ if ($_SESSION) {
                     $next = $row[5];
                     $previous = $row[4];
                     $id = $row[6];
+                    //Autor abfragen
+                    $result = mysql_query('SELECT name FROM weblog.user WHERE email="' . $row[1] . '"');
+                    $row2 = mysql_fetch_row($result);
+                    $author = $row2[0];
                     ?>
                     <article>
                         <h2><?php echo $row[2]; ?></h2>
                         <figure>
                         </figure>
-                        <div id="author">posted by <?php echo $row[1]; ?> on <?php echo $row[0]; ?></div>   
+                        <div id="author">posted by <?php echo $author; ?> on <?php echo $row[0]; ?></div>   
                         <div id="line">
                             <div></div>
                         </div>
@@ -107,8 +111,24 @@ if ($_SESSION) {
                     </article>
                     <div id="comments">
                         <div id="newcomment">
-                            <input type="text"/>
-                            <div class="button"><div>POST</div></div>
+                            <div class="tablecell">
+                                <?php
+                                if ($_SESSION['userstate'] == -1) {
+                                    ?>                            
+                                    <div id="emailwrapper">
+                                        <label id="l_email" for="email">email</label>
+                                        <input name="email" type="email" id="email"/>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                                <div>
+                                    <textarea id="comment" rows="4"></textarea>
+                                </div>
+                            </div>
+                            <div class="tablecell" id="postbutton">
+                                <div class="button" onclick="postcomment(<?php echo $id; ?>)"><div>POST</div></div>
+                            </div>
                         </div>
                         <div id="commentcontainer">
                             <?php
@@ -160,15 +180,20 @@ if ($_SESSION) {
             <div class="clear"></div>
             <footer>
                 <?php
-                echo $_SESSION['userstate'];
+                //echo $_SESSION['userstate'];
                 if ($_SESSION['userstate'] > -1) {
                     ?>
-                    <div>logout</div>
+                    <div class="login">You are logged in as <span class="username"><?php echo $_SESSION['username']; ?></span></div>
+                    <div class="login">
+                        <div class="button" onclick="logout()">
+                            <div>logout</div>                            
+                        </div>                        
+                    </div>
                     <?php
                 } else {
                     ?>
                     <div class="login">
-                        <input type="text" name="username" id="username">
+                        <input type="email" name="username" id="username">
                     </div>
                     <div class="login">
                         <input type="password" name="password" id="password">

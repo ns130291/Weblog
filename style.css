@@ -58,9 +58,10 @@ header h1{
     display: block;
     color:#FCBB00;
     text-decoration: none;
-    min-height: 30px;
     border-left: 10px solid #343434;
     border-right: 10px solid #343434;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 #mainnav a:hover {
@@ -79,7 +80,7 @@ body section{
 }
 
 article {
-    padding: 15px;
+    padding: 15px 30px;
     background-color: #747474;
     -moz-box-shadow: 0px 0 10px 5px rgba(52,52,52,1);
     -webkit-box-shadow: 0px 0 10px 5px rgba(52,52,52,1);
@@ -128,7 +129,7 @@ section h2 {
     cursor: pointer;
     font-family: Arial, sans-serif;
     display: table;
-    border: 1px solid #767776;
+    border: 1px solid #505050;
     vertical-align: middle;
     text-shadow: 0 1px rgba(0, 0, 0, 0.1);
     background-image: linear-gradient(center top , #FCBB00, #f2b400);
@@ -192,6 +193,7 @@ section h2 {
     width: 500px;
     margin: 0 auto;
     background-color: #747474;
+    display: table;
 }
 
 #commentcontainer>div:first-child{
@@ -263,6 +265,33 @@ section h2 {
     margin-top: 10px;
 }
 
+#comment{
+    width: 400px;
+}
+
+#emailwrapper{
+    padding-bottom: 5px;
+}
+#email{
+    width: 346px;
+}
+
+#l_email{
+    width: 50px;
+    display: inline-block;
+}
+
+.tablecell{
+    display: table-cell;
+}
+
+#postbutton{
+    text-align: center;
+    padding-left: 35px;
+    vertical-align: bottom;
+    width: 55px;
+}
+
 .login{
     display: inline-block;
 }
@@ -270,4 +299,14 @@ section h2 {
 #error{
     display: none;
     color: red;
+}
+
+.username{
+    text-decoration: underline;
+    color: blue;
+}
+
+footer{
+    padding: 15px 0;
+    background-color: #747474;
 }
