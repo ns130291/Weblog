@@ -82,7 +82,7 @@ if ($_SESSION) {
                         <div id="line">
                             <div></div>
                         </div>
-                        <div id="article"><?php echo $row[3]; ?></div>
+                        <div id="article" onclick="edit('article')"><?php echo $row[3]; ?></div>
                         <div id="articlenav">
                             <div id="next" class="button"><?php
                 if ($next != 0) {

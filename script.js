@@ -35,7 +35,7 @@ function postcomment(id){
     var comment= document.getElementById("comment").value;
     var req = new XMLHttpRequest();
     var url = "comment.php";
-    var params = "id="+id+"&comment="+comment;
+    var params = "id="+id+"&comment="+encodeURIComponent(comment);
     if(email){
         params+="&email="+email;
     }
@@ -61,4 +61,30 @@ function logout(){
         }
     }
     req.send();
+}
+
+var editing=false;
+var editelement="";
+
+function edit(id){
+    if(!editing){
+        editing=true;
+        editelement=id;
+        /*window.addEventListener("", function(){
+            alert("edit end");
+        }, false);*/
+        var parent = document.getElementById(id);
+        var text = parent.innerHTML;
+        parent.innerHTML = "";
+        var textarea = document.createElement("textarea");
+        textarea.style.width = "650px";    
+        textarea.value = text;
+        textarea.addEventListener("blur", function(event){
+            //event.stopPropagation();
+            alert("stop")
+        }, false);
+        parent.appendChild(textarea);
+        textarea.focus();
+        textarea.style.height = ((25 + textarea.scrollHeight + textarea.style.height)<450) ? "450px" : (25 + textarea.scrollHeight + textarea.style.height)+"px" ;
+    }
 }
