@@ -1,4 +1,5 @@
 RewriteEngine On # Turn on the rewriting engine
 RewriteRule ^page/([0-9]+)(.*)?$ show_page.php?id=$1 [NC,L] # Handle page requests
 RewriteRule ^article/([0-9]+)(.*)?$ show_article.php?id=$1 [NC,L] # Handle article requests with id
-RewriteRule ^article/latest(.*)?$ show_article.php [NC,L] # Handle product requests
+RewriteRule ^article/latest(.*)?$ show_article.php [NC,L] # Shows latest article
+RewriteRule ^$ show_article.php [NC,L] #nothing matched

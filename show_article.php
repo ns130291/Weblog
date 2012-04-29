@@ -160,6 +160,7 @@ if ($_SESSION) {
             <div class="clear"></div>
             <footer>
                 <?php
+                echo $_SESSION['userstate'];
                 if ($_SESSION['userstate'] > -1) {
                     ?>
                     <div>logout</div>
@@ -173,10 +174,11 @@ if ($_SESSION) {
                         <input type="password" name="password" id="password">
                     </div>
                     <div class="login">
-                        <div class="button">
+                        <div class="button" onclick="login()">
                             <div id="login">login</div>
                         </div>
                     </div>
+                    <div id="error">error</div>
                     <?php
                 }
                 ?>

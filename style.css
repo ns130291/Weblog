@@ -266,3 +266,8 @@ section h2 {
 .login{
     display: inline-block;
 }
+
+#error{
+    display: none;
+    color: red;
+}
