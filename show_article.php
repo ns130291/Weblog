@@ -75,21 +75,43 @@ if ($_SESSION) {
                     $author = $row2[0];
                     ?>
                     <article>
-                        <h2><?php echo $row[2]; ?></h2>
+                        <h2 id="title" 
+                        <?php
+                        if (isset($_SESSION['useremail'])) {
+                            if ($row[1] == $_SESSION['useremail'] || $_SESSION['userstate'] == 2) {
+                                ?>
+                                    onclick="edit('title',<?php echo $id; ?>)"
+                                    <?php
+                                }
+                            }
+                            ?>
+                            ><?php echo $row[2]; ?>
+                        </h2>
                         <figure>
                         </figure>
                         <div id="author">posted by <?php echo $author; ?> on <?php echo $row[0]; ?></div>   
                         <div id="line">
                             <div></div>
                         </div>
-                        <div id="article" onclick="edit('article')"><?php echo $row[3]; ?></div>
+                        <div id="article" 
+                        <?php
+                        if (isset($_SESSION['useremail'])) {
+                            if ($row[1] == $_SESSION['useremail'] || $_SESSION['userstate'] == 2) {
+                                ?>
+                                     onclick="edit('article',<?php echo $id; ?>)"
+                                     <?php
+                                 }
+                             }
+                             ?>
+                             ><?php echo $row[3]; ?>
+                        </div>
                         <div id="articlenav">
                             <div id="next" class="button"><?php
-                if ($next != 0) {
-                    $result = mysql_query("SELECT id, title FROM weblog.article WHERE id=" . $next);
-                    if ($result) {
-                        $row = mysql_fetch_row($result);
-                            ?>
+                         if ($next != 0) {
+                             $result = mysql_query("SELECT id, title FROM weblog.article WHERE id=" . $next);
+                             if ($result) {
+                                 $row = mysql_fetch_row($result);
+                                     ?>
                                         <a href="/Weblog/article/<?php echo $row[0] . "/" . strtolower(str_replace(" ", "_", $row[1])); ?>/">next</a>
                                         <?php
                                     }
@@ -135,15 +157,28 @@ if ($_SESSION) {
                             $result = mysql_query("SELECT author, email, date, text FROM weblog.comment WHERE article=" . $id . " ORDER BY id");
                             if ($result) {
                                 if (mysql_num_rows($result)) {
-                                    while ($row = mysql_fetch_row($result)) {
+                                    while ($row = mysql_fetch_array($result)) {
                                         ?>
                                         <div>
                                             <div class="left">
                                                 <div class="comauth">
-                                                    <?php
-                                                    echo $row[0];
-                                                    echo $row[1];
-                                                    ?>
+                                                    <a href="mailto:<?php
+                                                    if ($row[0]) {
+                                                        echo $row[0];
+                                                    } else {
+                                                        echo $row[1];
+                                                    }
+                                                    ?>">
+                                                           <?php
+                                                           if ($row[0]) {
+                                                               $result2 = mysql_query('SELECT name FROM weblog.user WHERE email="' . $row[0] . '"');
+                                                               $row3 = mysql_fetch_row($result2);
+                                                               echo $row3[0];
+                                                           } else {
+                                                               echo $row[1];
+                                                           }
+                                                           ?>
+                                                    </a>
                                                 </div>
                                                 <div class="date">
                                                     on <?php echo $row[2]; ?>
@@ -180,7 +215,7 @@ if ($_SESSION) {
             <div class="clear"></div>
             <footer>
                 <?php
-                //echo $_SESSION['userstate'];
+//echo $_SESSION['userstate'];
                 if ($_SESSION['userstate'] > -1) {
                     ?>
                     <div class="login">You are logged in as <span class="username"><?php echo $_SESSION['username']; ?></span></div>
@@ -193,10 +228,10 @@ if ($_SESSION) {
                 } else {
                     ?>
                     <div class="login">
-                        <input type="email" name="username" id="username">
+                        <input type="email" name="username" id="username" placeholder="email">
                     </div>
                     <div class="login">
-                        <input type="password" name="password" id="password">
+                        <input type="password" name="password" id="password" placeholder="password">
                     </div>
                     <div class="login">
                         <div class="button" onclick="login()">
@@ -204,9 +239,15 @@ if ($_SESSION) {
                         </div>
                     </div>
                     <div id="error">error</div>
+                    <div class="login">
+                        <div class="button" onclick="register()">
+                            <div id="login">register</div>
+                        </div>
+                    </div>
                     <?php
                 }
                 ?>
+                <div class="clear"></div>
             </footer>
         </div>
     </body>

@@ -256,6 +256,15 @@ section h2 {
     text-overflow: ellipsis;
 }
 
+.comauth a{
+    text-decoration: none;
+    color: black;
+}
+
+.comauth a:hover{
+    text-decoration: underline;
+}
+
 .comment{
     background-color: white;
     border-radius: 0.5em;
@@ -293,7 +302,13 @@ section h2 {
 }
 
 .login{
-    display: inline-block;
+    display: block;
+    float: left;
+    padding-left: 7px;
+}
+
+.login input{
+    margin-top: 3px;
 }
 
 #error{
@@ -303,10 +318,20 @@ section h2 {
 
 .username{
     text-decoration: underline;
-    color: blue;
+    color: #FCBB00;
 }
 
 footer{
-    padding: 15px 0;
+    padding: 15px;
     background-color: #747474;
+}
+
+#namealert{
+    width: 300px;
+    height: 29px;
+    position: fixed;
+    background-color: #343434;
+    border: 1px solid #FCBB00;
+    padding: 20px;
+    border-radius: 15px;
 }
