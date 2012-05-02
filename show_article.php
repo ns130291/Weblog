@@ -35,7 +35,7 @@ if ($_SESSION) {
             </header>
             <nav id="mainnav">
                 <div>
-                    <a href="/Weblog/article/latest/">article</a>
+                    <a href="/Weblog/article/latest/">Articles</a>
                 </div>
                 <?php
                 $result = mysql_query("SELECT id, name FROM weblog.page ORDER BY position");
@@ -110,9 +110,9 @@ if ($_SESSION) {
                          if ($next != 0) {
                              $result = mysql_query("SELECT id, title FROM weblog.article WHERE id=" . $next);
                              if ($result) {
-                                 $row = mysql_fetch_row($result);
+                                 $row4 = mysql_fetch_row($result);
                                      ?>
-                                        <a href="/Weblog/article/<?php echo $row[0] . "/" . strtolower(str_replace(" ", "_", $row[1])); ?>/">next</a>
+                                        <a href="/Weblog/article/<?php echo $row4[0] . "/" . strtolower(str_replace(" ", "_", $row4[1])); ?>/">next</a>
                                         <?php
                                     }
                                 }
@@ -121,9 +121,9 @@ if ($_SESSION) {
                             if ($previous != 0) {
                                 $result = mysql_query("SELECT id, title FROM weblog.article WHERE id=" . $previous);
                                 if ($result) {
-                                    $row = mysql_fetch_row($result);
+                                    $row4 = mysql_fetch_row($result);
                                         ?>
-                                        <a href="/Weblog/article/<?php echo $row[0] . "/" . strtolower(str_replace(" ", "_", $row[1])); ?>/">previous</a>
+                                        <a href="/Weblog/article/<?php echo $row4[0] . "/" . strtolower(str_replace(" ", "_", $row4[1])); ?>/">previous</a>
                                         <?php
                                     }
                                 }
@@ -154,21 +154,30 @@ if ($_SESSION) {
                         </div>
                         <div id="commentcontainer">
                             <?php
-                            $result = mysql_query("SELECT author, email, date, text FROM weblog.comment WHERE article=" . $id . " ORDER BY id");
+                            $result = mysql_query("SELECT author, email, date, text, id FROM weblog.comment WHERE article=" . $id . " ORDER BY id");
                             if ($result) {
                                 if (mysql_num_rows($result)) {
                                     while ($row = mysql_fetch_array($result)) {
                                         ?>
                                         <div>
+                                            <?php
+                                            if (isset($_SESSION['useremail'])) {
+                                                if ($row[0] == $_SESSION['useremail'] || $_SESSION['userstate'] == 2) {
+                                                    ?>
+                                                    <div class="delete" onclick="deletecomment(<?php echo $row[4]; ?>)">delete</div>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
                                             <div class="left">
                                                 <div class="comauth">
                                                     <a href="mailto:<?php
-                                                    if ($row[0]) {
-                                                        echo $row[0];
-                                                    } else {
-                                                        echo $row[1];
-                                                    }
-                                                    ?>">
+                            if ($row[0]) {
+                                echo $row[0];
+                            } else {
+                                echo $row[1];
+                            }
+                                            ?>">
                                                            <?php
                                                            if ($row[0]) {
                                                                $result2 = mysql_query('SELECT name FROM weblog.user WHERE email="' . $row[0] . '"');
@@ -225,6 +234,11 @@ if ($_SESSION) {
                         </div>                        
                     </div>
                     <?php
+                    if ($_SESSION['userstate'] == 2) {
+                        ?>
+                        <div id="addarticle" onclick="addarticle();">add article</div>
+                        <?php
+                    }
                 } else {
                     ?>
                     <div class="login">

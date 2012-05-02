@@ -9,7 +9,7 @@ function login(){
     var password = document.getElementById("password").value;
     //alert(username+password);
     var req = new XMLHttpRequest();
-    var url = "login.php";
+    var url = "/Weblog/login.php";
     var params = "username="+username+"&password="+password;
     req.open("post", url, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -34,7 +34,7 @@ function postcomment(id){
     }
     var comment= document.getElementById("comment").value;
     var req = new XMLHttpRequest();
-    var url = "comment.php";
+    var url = "/Weblog/comment.php";
     var params = "id="+id+"&comment="+encodeURIComponent(comment);
     if(email){
         params+="&email="+email;
@@ -43,7 +43,7 @@ function postcomment(id){
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.onreadystatechange = function(){
         if(req.readyState==4&&req.status==200){
-            alert("comment abgeschickt");
+            //alert("comment abgeschickt");
             window.location.reload();
         }
     }
@@ -52,7 +52,7 @@ function postcomment(id){
 
 function logout(){
     var req = new XMLHttpRequest();
-    var url = "logout.php";
+    var url = "/Weblog/logout.php";
     req.open("post", url, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     req.onreadystatechange = function(){
@@ -75,7 +75,7 @@ function edit(id, articleid){
             alert("edit end");
         }, false);*/
         var parent = document.getElementById(id);
-        var text = parent.innerHTML;
+        var text = parent.innerHTML.replace(/^\s+|\s+$/g,"");
         parent.innerHTML = "";
         var textarea = document.createElement("textarea");
         textarea.style.width = "650px";    
@@ -84,7 +84,7 @@ function edit(id, articleid){
             //event.stopPropagation();
             var text = this.value;
             var req = new XMLHttpRequest();
-            var url = "saveorupdatepage.php";
+            var url = "/Weblog/saveorupdatearticle.php";
             var params = "articleid="+articleid;
             if(editelement=="article"){
                 params += "&text="+encodeURIComponent(text);
@@ -133,7 +133,7 @@ function register2(){
     window.onresize = null;
     document.body.removeChild(document.getElementById("namealert"));
     var req = new XMLHttpRequest();
-    var url = "register.php";
+    var url = "/Weblog/register.php";
     var params = "username="+username+"&password="+password+"&name="+name;
     req.open("post", url, true);
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -143,6 +143,51 @@ function register2(){
         }else{
             //alert("error");
             document.getElementById("error").style.display="inline-block";
+        }
+    }
+    req.send(params); 
+}
+
+function deletecomment(id){
+    var req = new XMLHttpRequest();
+    var url = "/Weblog/deletecomment.php";
+    var params = "id="+id;
+    req.open("post", url, true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.onreadystatechange = function(){
+        if(req.readyState==4&&req.status==200){
+            //alert("deleting");
+            window.location.reload();
+        }
+    }
+    req.send(params); 
+}
+
+function addarticle(){
+    var namealert  =document.createElement("div");
+    namealert.id = "articlealert";
+    namealert.style.top = window.innerHeight/2-100+"px";    
+    namealert.style.left = window.innerWidth/2-150+"px";   
+    namealert.innerHTML = '<div><input type="text" placeholder="title" id="atitle"></div><div><textarea id="atextarea"></textarea></div><div style="float:right;"><div class="button" onclick="addarticle2()"><div id="login">ok</div></div></div>';
+    document.body.insertBefore(namealert, document.body.childNodes[0]);
+    window.onresize = function(){
+        var namealert = document.getElementById("articlealert");
+        namealert.style.top = window.innerHeight/2-100+"px";    
+        namealert.style.left = window.innerWidth/2-150+"px";  
+    }
+}
+
+function addarticle2(){
+    var title = document.getElementById("atitle").value;
+    var text = document.getElementById("atextarea").value
+    var req = new XMLHttpRequest();
+    var url = "/Weblog/saveorupdatearticle.php";
+    var params = "&text="+encodeURIComponent(text)+"&title="+encodeURIComponent(title);
+    req.open("post", url, true);
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.onreadystatechange = function(){
+        if(req.readyState==4&&req.status==200){
+            window.location.reload();
         }
     }
     req.send(params); 

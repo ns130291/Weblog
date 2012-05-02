@@ -154,8 +154,9 @@ section h2 {
 }
 
 .button:hover{
-    background-color: #006100;
+    background-color: #ff9900;
     background-image: linear-gradient(top center, #ff9900, #f19100);
+    background-image: -webkit-linear-gradient(top center, #ff9900, #f19100);
     background-image: -ms-linear-gradient(top center, #ff9900, #f19100);
     background-image: -moz-linear-gradient(top center, #ff9900, #f19100);
 }
@@ -265,6 +266,24 @@ section h2 {
     text-decoration: underline;
 }
 
+.delete{
+    display: none;
+    float: right;
+    background-color: #FCBB00;
+    border-radius: 0 0.5em 0 0.5em;
+    padding: 2px 6px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.delete:hover{
+    background-color: red;
+}
+
+#commentcontainer div:hover .delete{
+    display: block;
+}
+
 .comment{
     background-color: white;
     border-radius: 0.5em;
@@ -334,4 +353,34 @@ footer{
     border: 1px solid #FCBB00;
     padding: 20px;
     border-radius: 15px;
+}
+
+#articlealert{
+    width: 300px;
+    height: 200px;
+    position: fixed;
+    background-color: #343434;
+    border: 1px solid #FCBB00;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+#articlealert div input, #articlealert div textarea{
+    width: 294px;
+}
+
+#articlealert div textarea{
+    height: 125px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#addarticle{
+    float: right;
+    color: #FCBB00;
+    cursor: pointer;
+}
+
+#addarticle:hover{
+    text-decoration: underline;
 }

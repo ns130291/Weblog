@@ -6,6 +6,16 @@ if (!$link) {
     die('Verbindung schlug fehl: ' . mysql_error());
 }
 mysql_select_db('weblog');
+
+//Session-Verwaltung
+session_start();
+if ($_SESSION) {
+    if (!isset($_SESSION['userstate'])) {
+        $_SESSION['userstate'] = -1;
+    }
+} else {
+    $_SESSION['userstate'] = -1;
+}
 ?>
 <html>
     <head>
@@ -22,7 +32,7 @@ mysql_select_db('weblog');
             </header>
             <nav id="mainnav">
                 <div>
-                    <a href="/Weblog/article/latest/">article</a>
+                    <a href="/Weblog/article/latest/">Articles</a>
                 </div>
                 <?php
                 $result = mysql_query("SELECT id, name FROM weblog.page ORDER BY position");
@@ -66,6 +76,42 @@ mysql_select_db('weblog');
                 ?>
             </section>
             <div class="clear"></div>
+                        <footer>
+                <?php
+//echo $_SESSION['userstate'];
+                if ($_SESSION['userstate'] > -1) {
+                    ?>
+                    <div class="login">You are logged in as <span class="username"><?php echo $_SESSION['username']; ?></span></div>
+                    <div class="login">
+                        <div class="button" onclick="logout()">
+                            <div>logout</div>                            
+                        </div>                        
+                    </div>
+                    <?php
+                } else {
+                    ?>
+                    <div class="login">
+                        <input type="email" name="username" id="username" placeholder="email">
+                    </div>
+                    <div class="login">
+                        <input type="password" name="password" id="password" placeholder="password">
+                    </div>
+                    <div class="login">
+                        <div class="button" onclick="login()">
+                            <div id="login">login</div>
+                        </div>
+                    </div>
+                    <div id="error">error</div>
+                    <div class="login">
+                        <div class="button" onclick="register()">
+                            <div id="login">register</div>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+                <div class="clear"></div>
+            </footer>
         </div>
     </body>
 </html>
