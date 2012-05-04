@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['name'])) {
         if ($_POST['username'] != "" && $_POST['password'] != "" && $_POST['name'] != "") {
             //echo $_POST['username'];
-            $result = mysql_query('INSERT INTO weblog.user (email, name, password, status) VALUES ("' . $_POST['username'] . '","' . $_POST['password'] . '","' . $_POST['name'] . '","0")');
+            $result = mysql_query('INSERT INTO weblog.user (email, name, password, status) VALUES ("' . $_POST['username'] . '","' . $_POST['name'] . '","' . $_POST['password'] . '","0")');
             echo 'INSERT INTO weblog.user (email, name, password, status) VALUES ("' . $_POST['username'] . '","' . $_POST['name'] . '","' . $_POST['password'] . '","0")';
             //$result = mysql_query("SELECT password, status, name FROM weblog.user WHERE email='" . $_POST['username'] . "'");
             if (!$result) {
