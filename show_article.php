@@ -234,7 +234,7 @@ if ($_SESSION) {
                         </div>                        
                     </div>
                     <?php
-                    if ($_SESSION['userstate'] == 2) {
+                    if ($_SESSION['userstate'] >= 1) {
                         ?>
                         <div id="addarticle" onclick="addarticle();">add article</div>
                         <?php
